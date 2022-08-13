@@ -1,10 +1,10 @@
-use proc_macro::TokenStream;
-use quote::{quote};
 
+macro_rules! test_macro {
+    ($out_struct:path, $path:literal) => ( {
+        println!($path);
+    });
+}
 
-#[proc_macro]
-pub fn nigga(_input: TokenStream) -> TokenStream {
-    TokenStream::from(quote!(
-            122
-    ))
+fn _s() {
+    test_macro!(String, "a");
 }
