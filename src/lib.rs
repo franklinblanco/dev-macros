@@ -4,8 +4,8 @@ mod auth;
 use proc_macro::TokenStream;
 
 #[proc_macro_attribute]
-pub fn authenticated_route(_: TokenStream, _: TokenStream) -> TokenStream {    
-    TokenStream::from(quote::quote!{
+pub fn authenticated_route(_: TokenStream, mut input: TokenStream) -> TokenStream {    
+    let tt_to_add = TokenStream::from(quote::quote!{
         let __header_conversion_result: dev_dtos::dtos::user::user_dtos::UserAuthHeader = match serde_json::from_str(match request.headers().get("authentication") {
             Some(auth_header) => match auth_header.to_str() {
                 Ok(string) => string,
@@ -20,5 +20,7 @@ pub fn authenticated_route(_: TokenStream, _: TokenStream) -> TokenStream {
             Ok(authed_user) => authed_user,
             Err(error) => return actix_web_utils::extensions::typed_response::TypedHttpResponse::return_standard_error(401, err::MessageResource::new_from_string(error.to_string())),
         };
-    })
+    });
+    input.extend(tt_to_add);
+    input
 }
