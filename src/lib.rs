@@ -6,7 +6,7 @@ use proc_macro::TokenStream;
 #[proc_macro_attribute]
 pub fn authenticated_route(_: TokenStream, mut input: TokenStream) -> TokenStream {    
     let tt_to_add = TokenStream::from(quote::quote!{
-        let __header_conversion_result: dev_dtos::dtos::user::user_dtos::UserAuthHeader = match serde_json::from_str(match request.headers().get("authentication") {
+        let header_conversion_result: dev_dtos::dtos::user::user_dtos::UserAuthHeader = match serde_json::from_str(match request.headers().get("authentication") {
             Some(auth_header) => match auth_header.to_str() {
                 Ok(string) => string,
                 Err(_) => return actix_web_utils::extensions::typed_response::TypedHttpResponse::return_standard_error(400, err::MessageResource::new_from_str("Auth header in incorrect format.")),
