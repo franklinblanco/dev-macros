@@ -22,6 +22,8 @@ pub fn authenticated_route(_: TokenStream, mut input: TokenStream) -> TokenStrea
     input
 }*/
 
+#[allow(unused_macros)]
+#[macro_export]
 macro_rules! authenticate_route {
     () => {
         let header_conversion_result: dev_dtos::dtos::user::user_dtos::UserAuthHeader = match serde_json::from_str(match request.headers().get("authentication") {

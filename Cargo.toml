@@ -4,11 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [lib]
-proc-macro = true
+#proc-macro = true
 
 [dependencies]
 syn = "1.0"
-quote = "1.0"
+#quote = "1.0"
 #proc-macro2 = "1.0"
 
 dev-dtos = { git = "https://github.com/franklinblanco/user-svc-dtos-rust.git" }
