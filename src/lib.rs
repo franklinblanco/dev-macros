@@ -36,9 +36,9 @@ macro_rules! authenticate_route {
             Ok(user_for_authentication) => user_for_authentication,
             Err(error) => return actix_web_utils::extensions::typed_response::TypedHttpResponse::return_standard_error(401, err::MessageResource::new_from_string(error.to_string())),
         };
-        let authenticated_user = match dev_communicators::middleware::user_svc::user_service::authenticate_user_with_token($client, &header_conversion_result.into()).await {
+        match dev_communicators::middleware::user_svc::user_service::authenticate_user_with_token($client, &header_conversion_result.into()).await {
             Ok(authed_user) => authed_user,
             Err(error) => return actix_web_utils::extensions::typed_response::TypedHttpResponse::return_standard_error(401, err::MessageResource::new_from_string(error.to_string())),
-        };
+        }
     };
 }
